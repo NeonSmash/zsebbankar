@@ -90,7 +90,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="invest.php">
+                <a class="nav-link" href="list.php">
                 <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Kívánságlista</span></a>
             </li>
@@ -331,6 +331,7 @@
                     <h1>Új tétel hozzáadása</h1>
                     <?php
                     include "config.php";
+                    $table = $_GET['table'];
                         // Ellenőrizzük, hogy az űrlap beküldve lett-e
                         if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // Paraméterek beállítása
@@ -340,7 +341,7 @@
                             $date = $_POST['date'];
                             
                             // Előkészített állítás a beszúrás művelethez
-                            $stmt = $conn->prepare("INSERT INTO items (title, description, amount, date) VALUES (?, ?, ?, ?)");
+                            $stmt = $conn->prepare("INSERT INTO $table (title, description, amount, date) VALUES (?, ?, ?, ?)");
                             $stmt->bind_param("ssss", $title, $description, $amount, $date);
                             
                             // Létrehozás művelet végrehajtása

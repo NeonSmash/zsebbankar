@@ -90,7 +90,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="invest.php">
+                <a class="nav-link" href="list.php">
                 <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Kívánságlista</span></a>
             </li>
@@ -337,13 +337,14 @@
                             
                             // Step 3: Get the values from the form
                             $id = $_POST['id'];
+                            $table = $_POST['table'];
                             $title = $_POST['title'];
                             $description = $_POST['description'];
                             $amount = $_POST['amount'];
                             $date = $_POST['date'];
                           
                             // Step 4: Prepare the update statement with placeholders
-                            $stmt = mysqli_prepare($conn, "UPDATE `items` SET title=?, description=?, amount=?, date=? WHERE id=?");
+                            $stmt = mysqli_prepare($conn, "UPDATE $table SET title=?, description=?, amount=?, date=? WHERE id=?");
                           
                             mysqli_stmt_bind_param($stmt, 'ssssi', $title, $description, $amount, $date, $id);
                           
@@ -363,7 +364,8 @@
                     
                           if (isset($_GET['id'])) {
                             $id = $_GET['id']; 
-                            $sql = "SELECT * FROM `items` WHERE `id`='$id'";
+                            $table = $_GET['table'];
+                            $sql = "SELECT * FROM $table WHERE `id`='$id'";
                             $result = $conn->query($sql); 
                             if ($result->num_rows > 0) {        
                                 while ($row = $result->fetch_assoc()) {
@@ -391,6 +393,7 @@
                             <div class="col-sm-6 mb-3 mb-sm-0">
                             Megnevezés:<input type="text" class="form-control form-control-user" name="title" value="<?php echo $title; ?>">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="table" value="<?php echo $table; ?>">
                             </div>
                             <div class="col-sm-6">
                             Leírás:<input type="text" class="form-control form-control-user" name="description" value="<?php echo $description; ?>">

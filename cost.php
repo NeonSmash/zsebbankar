@@ -90,7 +90,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="invest.php">
+                <a class="nav-link" href="list.php">
                 <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Kívánságlista</span></a>
             </li>
@@ -330,8 +330,8 @@
                     <!-- Page Heading -->
                     <?php
                     include "config.php";
-                    include "functions.php";
-                    $sql = "SELECT * FROM `items` WHERE `amount` < 0";
+                    include "delete.php";
+                    $sql = "SELECT * FROM `items` WHERE `amount` < 0 ORDER BY `date` DESC";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                     ?>
@@ -353,7 +353,6 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        
                                             while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
@@ -362,7 +361,8 @@
                                             <td><?php echo $row['description'] ?></td>
                                             <td><?php echo $row['amount'] ?></td>
                                             <td><?php echo $row['date'] ?></td>
-                                            <td><a class="btn btn-info" href="update.php?id=<?php echo $row['id']; ?>&action=update">Szerkesztés</a>&nbsp;<a class="btn btn-danger" href="cost.php?id=<?php echo $row['id']; ?>&action=delete">Törlés</a></td>
+                                            <td><a class="btn btn-info" href="update.php?id=<?php echo $row['id']; ?>&table=items">Szerkesztés</a>
+                                            &nbsp;<a class="btn btn-danger" href="cost.php?id=<?php echo $row['id']; ?>&action=delete&table=items">Törlés</a></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -378,7 +378,7 @@
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-info" href="create.php">Hozzáadás</a>
+                    <a class="btn btn-info" href="create.php?table=items">Hozzáadás</a>
                 </div>
                 <!-- /.container-fluid -->
             </div>
